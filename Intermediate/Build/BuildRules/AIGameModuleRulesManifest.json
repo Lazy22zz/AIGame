@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"D:\\UE5-AIGame\\AIGame\\Source\\AIGame\\AIGame.Build.cs",
+		"D:\\UE5-AIGame\\AIGame\\Source\\AIGame.Target.cs",
+		"D:\\UE5-AIGame\\AIGame\\Source\\AIGameEditor.Target.cs"
+	],
+	"EngineVersion": "5.4.4"
+}
