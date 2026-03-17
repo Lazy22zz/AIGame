@@ -6,6 +6,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputAction.h"
 #include "InputMappingContext.h"
+#include "InputCoreTypes.h"
 
 AStackPlayerController::AStackPlayerController()
 {
@@ -26,7 +27,9 @@ void AStackPlayerController::SetupInputComponent()
 	StackMappingContext = NewObject<UInputMappingContext>(this, TEXT("IMC_Stack"));
 
 	// Primary action: screen-tap (Android), LMB (desktop), Space, gamepad A
-	StackMappingContext->MapKey(PlaceBlockAction, EKeys::Touch1);          // finger tap — Android / iOS
+	// Use FKey(TEXT("Touch1")) instead of EKeys::Touch1 to avoid header-order
+	// issues; both resolve to the same underlying FName key.
+	StackMappingContext->MapKey(PlaceBlockAction, FKey(TEXT("Touch1")));   // finger tap — Android / iOS
 	StackMappingContext->MapKey(PlaceBlockAction, EKeys::SpaceBar);
 	StackMappingContext->MapKey(PlaceBlockAction, EKeys::LeftMouseButton);
 	StackMappingContext->MapKey(PlaceBlockAction, EKeys::Gamepad_FaceButton_Bottom);

@@ -32,11 +32,12 @@ public:
 	// Called by the player controller when R is pressed
 	void RestartGame();
 
-	// ---- HUD accessors ----
-	EStackGameState GetGameState()      const { return GameState; }
-	int32           GetScore()          const { return Score; }
-	int32           GetBestScore()      const { return BestScore; }
-	int32           GetComboCount()     const { return ComboCount; }
+	// ---- HUD / controller accessors ----
+	EStackGameState GetGameState()         const { return GameState; }
+	bool            IsGameOver()           const { return GameState == EStackGameState::GameOver; }
+	int32           GetScore()             const { return Score; }
+	int32           GetBestScore()         const { return BestScore; }
+	int32           GetComboCount()        const { return ComboCount; }
 	bool            IsPerfectFlashActive() const { return bPerfectFlashActive; }
 	float           GetPerfectFlashAlpha() const;
 
