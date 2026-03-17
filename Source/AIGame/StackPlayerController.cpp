@@ -24,9 +24,14 @@ void AStackPlayerController::SetupInputComponent()
 
 	// --- Build Mapping Context ---
 	StackMappingContext = NewObject<UInputMappingContext>(this, TEXT("IMC_Stack"));
+
+	// Primary action: screen-tap (Android), LMB (desktop), Space, gamepad A
+	StackMappingContext->MapKey(PlaceBlockAction, EKeys::Touch1);          // finger tap — Android / iOS
 	StackMappingContext->MapKey(PlaceBlockAction, EKeys::SpaceBar);
 	StackMappingContext->MapKey(PlaceBlockAction, EKeys::LeftMouseButton);
 	StackMappingContext->MapKey(PlaceBlockAction, EKeys::Gamepad_FaceButton_Bottom);
+
+	// Dedicated restart — keyboard / gamepad only (touch uses the smart tap path above)
 	StackMappingContext->MapKey(RestartGameAction, EKeys::R);
 	StackMappingContext->MapKey(RestartGameAction, EKeys::Gamepad_Special_Right);
 
@@ -71,7 +76,12 @@ void AStackPlayerController::OnPlaceBlock()
 {
 	if (AStackGameMode* GM = GetWorld()->GetAuthGameMode<AStackGameMode>())
 	{
-		GM->PlaceActiveBlock();
+		// On mobile there is no separate "Restart" key, so a tap does the right
+		// thing in every state: restart when the game is over, place otherwise.
+		if (GM->IsGameOver())
+			GM->RestartGame();
+		else
+			GM->PlaceActiveBlock();
 	}
 }
 
